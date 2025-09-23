@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- IP -->
+    <EditText
+        android:id="@+id/editIp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:hint="IP адрес"
+        android:inputType="text"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Port -->
+    <EditText
+        android:id="@+id/editPort"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:hint="Порт"
+        android:inputType="number"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Password -->
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Кнопки Скриншот и Выключение -->
+    <Button
+        android:id="@+id/btnScreenshot"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:text="Скриншот"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnProcesses"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:text="Процессы"
+        android:layout_marginBottom="8dp"/>
+
+
+    <Button
+        android:id="@+id/btnShutdown"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="48dp"
+        android:text="Выключить ПК"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- ImageView для скриншота -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#DDD"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="16dp"/>
+</LinearLayout>
