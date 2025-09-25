@@ -1,75 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fillViewport="true"
+    android:background="#F5F5F5">
 
-    <!-- IP -->
-    <EditText
-        android:id="@+id/editIp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:hint="IP адрес"
-        android:inputType="text"
-        android:padding="12dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-    <!-- Port -->
-    <EditText
-        android:id="@+id/editPort"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:hint="Порт"
-        android:inputType="number"
-        android:padding="12dp"
-        android:layout_marginBottom="8dp"/>
+        <!-- Карточка с подключением -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:clipToOutline="true"
+            android:backgroundTint="@android:color/white">
 
-    <!-- Password -->
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:hint="Пароль"
-        android:inputType="textPassword"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"/>
+            <EditText
+                android:id="@+id/editIp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="IP адрес"
+                android:inputType="text"
+                android:backgroundTint="#2196F3"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
 
-    <!-- Кнопки Скриншот и Выключение -->
-    <Button
-        android:id="@+id/btnScreenshot"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:text="Скриншот"
-        android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/editPort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Порт"
+                android:inputType="number"
+                android:backgroundTint="#2196F3"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
 
-    <Button
-        android:id="@+id/btnProcesses"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:text="Процессы"
-        android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Пароль"
+                android:inputType="textPassword"
+                android:backgroundTint="#2196F3"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
 
+        <!-- Кнопки действий -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:clipToOutline="true">
 
-    <Button
-        android:id="@+id/btnShutdown"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:minHeight="48dp"
-        android:text="Выключить ПК"
-        android:layout_marginBottom="8dp"/>
+            <Button
+                android:id="@+id/btnScreenshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📸 Скриншот"
+                android:backgroundTint="#4CAF50"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp"/>
 
-    <!-- ImageView для скриншота -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#DDD"
-        android:scaleType="fitCenter"
-        android:layout_marginBottom="16dp"/>
-</LinearLayout>
+            <Button
+                android:id="@+id/btnProcesses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚙️ Процессы"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/btnShutdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⏻ Выключить ПК"
+                android:backgroundTint="#F44336"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <!-- Скриншот -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/white"
+            android:scaleType="fitCenter"
+            android:elevation="4dp"/>
+    </LinearLayout>
+</ScrollView>

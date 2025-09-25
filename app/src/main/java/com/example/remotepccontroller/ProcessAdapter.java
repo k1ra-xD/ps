@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHolder> {
@@ -17,11 +18,11 @@ public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHold
         void onKillClick(ProcessItem process);
     }
 
-    private final List<ProcessItem> processes;
+    private List<ProcessItem> processes;
     private final OnKillClickListener listener;
 
     public ProcessAdapter(List<ProcessItem> processes, OnKillClickListener listener) {
-        this.processes = processes;
+        this.processes = processes != null ? processes : new ArrayList<>();
         this.listener = listener;
     }
 
@@ -45,6 +46,12 @@ public class ProcessAdapter extends RecyclerView.Adapter<ProcessAdapter.ViewHold
     @Override
     public int getItemCount() {
         return processes.size();
+    }
+
+    // 🔥 Добавил метод для обновления списка
+    public void updateList(List<ProcessItem> newProcesses) {
+        this.processes = newProcesses != null ? newProcesses : new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

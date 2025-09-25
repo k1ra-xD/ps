@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editIp, editPort, editPassword;
     private Button btnScreenshot, btnShutdown, btnProcesses;
     private ImageView imageView;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +33,45 @@ public class MainActivity extends AppCompatActivity {
         btnProcesses = findViewById(R.id.btnProcesses);
         imageView = findViewById(R.id.imageView);
 
-        btnScreenshot.setOnClickListener(v -> takeScreenshot());
-        btnShutdown.setOnClickListener(v -> shutdownPC());
+        sessionManager = new SessionManager(this);
+
+        // если уже есть данные → подставляем
+        if (sessionManager.hasSession()) {
+            editIp.setText(sessionManager.getIp());
+            editPort.setText(String.valueOf(sessionManager.getPort()));
+            editPassword.setText(sessionManager.getPassword());
+        }
+
+        btnScreenshot.setOnClickListener(v -> {
+            saveSession();
+            takeScreenshot();
+        });
+
+        btnShutdown.setOnClickListener(v -> {
+            saveSession();
+            shutdownPC();
+        });
 
         btnProcesses.setOnClickListener(v -> {
+            saveSession();
             Intent intent = new Intent(MainActivity.this, ProcessesActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void saveSession() {
+        String ip = editIp.getText().toString().trim();
+        String portStr = editPort.getText().toString().trim();
+        String password = editPassword.getText().toString();
+
+        int port = 0;
+        try {
+            port = Integer.parseInt(portStr);
+        } catch (Exception ignored) {}
+
+        sessionManager.saveSession(ip, port, "user", password);
+        // username поставил "user", т.к. у тебя только пароль.
+        // Если будет логин — поменяешь.
     }
 
     private void takeScreenshot() {
