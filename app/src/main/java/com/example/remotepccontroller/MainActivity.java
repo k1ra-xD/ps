@@ -16,7 +16,7 @@ import java.net.Socket;
 public class MainActivity extends AppCompatActivity {
 
     private EditText editIp, editPort, editPassword;
-    private Button btnScreenshot, btnShutdown, btnProcesses;
+    private Button btnScreenshot, btnShutdown, btnProcesses, btnCursor;
     private ImageView imageView;
     private SessionManager sessionManager;
 
@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         btnScreenshot = findViewById(R.id.btnScreenshot);
         btnShutdown = findViewById(R.id.btnShutdown);
         btnProcesses = findViewById(R.id.btnProcesses);
+        btnCursor = findViewById(R.id.btnCursor); // новая кнопка
         imageView = findViewById(R.id.imageView);
 
         sessionManager = new SessionManager(this);
 
-        // если уже есть данные → подставляем
         if (sessionManager.hasSession()) {
             editIp.setText(sessionManager.getIp());
             editPort.setText(String.valueOf(sessionManager.getPort()));
@@ -57,6 +57,23 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ProcessesActivity.class);
             startActivity(intent);
         });
+
+        btnCursor.setOnClickListener(v -> {
+            saveSession();
+            Intent intent = new Intent(MainActivity.this, CursorActivity.class);
+            startActivity(intent);
+        });
+
+        Button btnRestart = findViewById(R.id.btnRestart);
+        btnRestart.setOnClickListener(v -> {
+            saveSession();
+            String ip = editIp.getText().toString().trim();
+            String port = editPort.getText().toString().trim();
+            String password = editPassword.getText().toString();
+
+            new SendCommandTask(ip, port, password).execute("restart");
+        });
+
     }
 
     private void saveSession() {
@@ -70,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ignored) {}
 
         sessionManager.saveSession(ip, port, "user", password);
-        // username поставил "user", т.к. у тебя только пароль.
-        // Если будет логин — поменяешь.
     }
 
     private void takeScreenshot() {
