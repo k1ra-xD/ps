@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:padding="8dp">
+    android:background="#1B1C1D"
+    android:padding="12dp">
 
     <!-- Панель с кнопками -->
     <LinearLayout
+        android:id="@+id/headerPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        android:padding="8dp"
-        android:layout_marginBottom="8dp">
+        android:background="#141A2E"
+        android:elevation="10dp"
+        android:padding="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
 
         <Button
             android:id="@+id/btnBack"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_weight="1"
-            android:text="⬅️ Назад"
-            android:backgroundTint="#F44336"
-            android:textColor="@android:color/white" />
+            android:text="⬅ НАЗАД"
+            android:textAllCaps="true"
+            android:backgroundTint="#FF00FF"
+            android:textColor="#00FFFF"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/btnRefresh"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_weight="1"
-            android:text="🔄 Обновить"
-            android:backgroundTint="#4CAF50"
-            android:textColor="@android:color/white" />
+            android:text="⚡ ОБНОВИТЬ"
+            android:textAllCaps="true"
+            android:backgroundTint="#00FFFF"
+            android:textColor="#FF00FF"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
 
     <!-- Список процессов -->
@@ -40,7 +50,10 @@
         android:id="@+id/recyclerViewProcesses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:elevation="2dp"
-        android:padding="4dp"/>
-</LinearLayout>
+        android:background="#141A2E"
+        android:elevation="6dp"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:layout_below="@id/headerPanel"
+        android:layout_margin="6dp"/>
+</RelativeLayout>

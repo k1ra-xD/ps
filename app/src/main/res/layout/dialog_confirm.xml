@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#0D0D0D"
+    android:gravity="center"
+    android:elevation="12dp">
+
+    <!-- Сообщение -->
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⚠ Вы уверены, что хотите выключить ПК?"
+        android:textSize="18sp"
+        android:textColor="#00E5FF"
+        android:fontFamily="monospace"
+        android:letterSpacing="0.05"
+        android:paddingBottom="20dp"
+        android:textAlignment="center"/>
+
+    <!-- Кнопки -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:text="✔ ДА"
+            android:textAllCaps="true"
+            android:backgroundTint="#FF00FF"
+            android:textColor="#00FFFF"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:text="✖ НЕТ"
+            android:textAllCaps="true"
+            android:backgroundTint="#00FFFF"
+            android:textColor="#FF00FF"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+</LinearLayout>

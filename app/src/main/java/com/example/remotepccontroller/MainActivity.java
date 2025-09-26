@@ -1,23 +1,23 @@
 package com.example.remotepccontroller;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.*;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editIp, editPort, editPassword;
-    private Button btnScreenshot, btnShutdown, btnProcesses, btnCursor;
-    private ImageView imageView;
+    private Button btnScreenshot, btnShutdown, btnProcesses, btnCursor, btnLock, btnRestart, btnMedia; // Все кнопки Button
     private SessionManager sessionManager;
 
     @Override
@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         btnScreenshot = findViewById(R.id.btnScreenshot);
         btnShutdown = findViewById(R.id.btnShutdown);
         btnProcesses = findViewById(R.id.btnProcesses);
-        btnCursor = findViewById(R.id.btnCursor); // новая кнопка
-        imageView = findViewById(R.id.imageView);
+        btnCursor = findViewById(R.id.btnCursor);
+        btnLock = findViewById(R.id.btnLock);
+        btnRestart = findViewById(R.id.btnRestart);
 
         sessionManager = new SessionManager(this);
 
@@ -49,31 +50,33 @@ public class MainActivity extends AppCompatActivity {
 
         btnShutdown.setOnClickListener(v -> {
             saveSession();
-            shutdownPC();
+            showCustomDialog("Вы уверены, что хотите выключить ПК?", this::shutdownPC);
         });
 
         btnProcesses.setOnClickListener(v -> {
             saveSession();
-            Intent intent = new Intent(MainActivity.this, ProcessesActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this, ProcessesActivity.class));
         });
 
         btnCursor.setOnClickListener(v -> {
             saveSession();
-            Intent intent = new Intent(MainActivity.this, CursorActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this, CursorActivity.class));
         });
 
-        Button btnRestart = findViewById(R.id.btnRestart);
         btnRestart.setOnClickListener(v -> {
             saveSession();
-            String ip = editIp.getText().toString().trim();
-            String port = editPort.getText().toString().trim();
-            String password = editPassword.getText().toString();
-
-            new SendCommandTask(ip, port, password).execute("restart");
+            showCustomDialog("Вы уверены, что хотите перезагрузить ПК?", () -> {
+                String ip = editIp.getText().toString().trim();
+                String port = editPort.getText().toString().trim();
+                String password = editPassword.getText().toString();
+                new SendCommandTask(ip, port, password).execute("restart");
+            });
         });
 
+        btnLock.setOnClickListener(v -> {
+            saveSession();
+            showCustomDialog("Вы уверены, что хотите заблокировать ПК?", this::lockPC);
+        });
     }
 
     private void saveSession() {
@@ -82,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
         String password = editPassword.getText().toString();
 
         int port = 0;
-        try {
-            port = Integer.parseInt(portStr);
-        } catch (Exception ignored) {}
+        try { port = Integer.parseInt(portStr); } catch (Exception ignored) {}
 
         sessionManager.saveSession(ip, port, "user", password);
     }
@@ -101,6 +102,36 @@ public class MainActivity extends AppCompatActivity {
         String port = editPort.getText().toString().trim();
         String password = editPassword.getText().toString();
         new SendCommandTask(ip, port, password).execute("shutdown");
+    }
+
+    private void lockPC() {
+        String ip = editIp.getText().toString().trim();
+        String port = editPort.getText().toString().trim();
+        String password = editPassword.getText().toString();
+        new SendCommandTask(ip, port, password).execute("lock");
+    }
+
+    private void showCustomDialog(String message, Runnable onConfirm) {
+        LayoutInflater inflater = getLayoutInflater();
+        final var dialogView = inflater.inflate(R.layout.dialog_confirm, null);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        TextView tvMessage = dialogView.findViewById(R.id.tvMessage);
+        tvMessage.setText(message);
+
+        Button btnYes = dialogView.findViewById(R.id.btnYes);
+        Button btnNo = dialogView.findViewById(R.id.btnNo);
+
+        btnYes.setOnClickListener(v -> {
+            dialog.dismiss();
+            onConfirm.run();
+        });
+
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private class SendCommandTask extends AsyncTask<String, Void, Object> {
@@ -134,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 dos.flush();
 
                 String authResp = dis.readUTF();
-                if (!"AUTH_OK".equals(authResp)) {
+                if (!"AUTH_OK".equals(authResp) && !authResp.startsWith("CONNECTED")) {
                     error = "Auth failed: " + authResp;
                     return null;
                 }
@@ -165,14 +196,24 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Ошибка: " + error, Toast.LENGTH_LONG).show();
                 return;
             }
+
             if (result instanceof byte[]) {
-                Bitmap bmp = BitmapFactory.decodeByteArray((byte[]) result, 0, ((byte[]) result).length);
-                imageView.setImageBitmap(bmp);
-                Toast.makeText(MainActivity.this, "Скриншот получен", Toast.LENGTH_SHORT).show();
-            } else if (result instanceof String) {
-                Toast.makeText(MainActivity.this, (String) result, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Нет ответа", Toast.LENGTH_SHORT).show();
+                byte[] imgBytes = (byte[]) result;
+                try {
+                    File file = new File(getCacheDir(), "screenshot.png");
+                    try (FileOutputStream out = new FileOutputStream(file)) {
+                        out.write(imgBytes);
+                        out.flush();
+                    }
+
+                    Intent intent = new Intent(MainActivity.this, FullscreenImageActivity.class);
+                    intent.putExtra("image_path", file.getAbsolutePath());
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Ошибка при обработке скриншота", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

@@ -2,25 +2,34 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F5F5F5"
+    android:background="#121212"
     android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
-        <!-- Карточка с подключением -->
+        <!-- Заголовок -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚡ Remote PC Controller ⚡"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#00E5FF"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Панель ввода -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:elevation="4dp"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:clipToOutline="true">
+            android:background="#1E1E1E"
+            android:padding="20dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="8dp">
 
             <EditText
                 android:id="@+id/editIp"
@@ -28,9 +37,11 @@
                 android:layout_height="wrap_content"
                 android:hint="IP адрес"
                 android:inputType="text"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:drawable/edit_text"/>
+                android:padding="14dp"
+                android:background="#2C2C2C"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="12dp"/>
 
             <EditText
                 android:id="@+id/editPort"
@@ -38,9 +49,11 @@
                 android:layout_height="wrap_content"
                 android:hint="Порт"
                 android:inputType="number"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:drawable/edit_text"/>
+                android:padding="14dp"
+                android:background="#2C2C2C"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="12dp"/>
 
             <EditText
                 android:id="@+id/editPassword"
@@ -48,75 +61,102 @@
                 android:layout_height="wrap_content"
                 android:hint="Пароль"
                 android:inputType="textPassword"
-                android:padding="12dp"
-                android:layout_marginBottom="0dp"
-                android:background="@android:drawable/edit_text"/>
+                android:padding="14dp"
+                android:background="#2C2C2C"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#757575"/>
         </LinearLayout>
 
-        <!-- Кнопки действий -->
+        <!-- Кнопки -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:elevation="4dp"
-            android:padding="16dp"
-            android:clipToOutline="true"
-            android:layout_marginBottom="16dp">
+            android:background="#1E1E1E"
+            android:padding="20dp"
+            android:elevation="8dp">
 
-            <Button
-                android:id="@+id/btnScreenshot"
+            <!-- Первый ряд -->
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="📸 Скриншот"
-                android:backgroundTint="#4CAF50"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
-            <Button
-                android:id="@+id/btnCursor"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Управление курсором"
-                android:backgroundTint="#FF9800"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"/>
+                <Button
+                    android:id="@+id/btnScreenshot"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="📸 Скриншот"
+                    android:backgroundTint="#00C853"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="12dp"/>
 
-            <Button
-                android:id="@+id/btnProcesses"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="⚙️ Процессы"
-                android:backgroundTint="#2196F3"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"/>
+                <Button
+                    android:id="@+id/btnCursor"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="🖱 Курсор"
+                    android:backgroundTint="#FF6D00"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btnShutdown"
+            <!-- Второй ряд -->
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="⏻ Выключить ПК"
-                android:backgroundTint="#F44336"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
-            <Button
-                android:id="@+id/btnRestart"
+                <Button
+                    android:id="@+id/btnProcesses"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="⚙️ Процессы"
+                    android:backgroundTint="#2962FF"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+
+                <Button
+                    android:id="@+id/btnShutdown"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="⏻ Выключить"
+                    android:backgroundTint="#D50000"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <!-- Третий ряд -->
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Перезагрузить ПК"
-                android:backgroundTint="#FF9800"
-                android:textColor="@android:color/white"/>
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnRestart"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="🔄 Перезагрузить"
+                    android:backgroundTint="#AA00FF"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+
+                <Button
+                    android:id="@+id/btnLock"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="🔒 Заблокировать"
+                    android:backgroundTint="#00BFA5"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+
         </LinearLayout>
-
-        <!-- Скриншот -->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/white"
-            android:scaleType="fitCenter"
-            android:elevation="4dp"/>
     </LinearLayout>
 </ScrollView>
